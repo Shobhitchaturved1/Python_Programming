@@ -13,11 +13,11 @@ void union_set(int x, int y,int parent[],int rank[]){
     }
     if(rank[p1]<rank[p2]){
         parent[p1]=p2;
-        rank[p2]+=rank[p1]+1;
+        rank[p2]+=rank[p1];
     }
     else{
         parent[p2]=p1;
-        rank[p1]+=rank[p2]+1;
+        rank[p1]+=rank[p2];
     }
 }
 int countServers(int** grid, int gridSize, int* gridColSize){
@@ -27,7 +27,7 @@ int countServers(int** grid, int gridSize, int* gridColSize){
     int rank[m*n];
     for(int i=0;i<m*n;i++){
         parent[i]=i;
-        rank[i]=0;
+        rank[i]=1;
     }
     //int ans=0;
     for(int i=0;i<m;i++){
@@ -39,8 +39,8 @@ int countServers(int** grid, int gridSize, int* gridColSize){
     }
     int ans=0;
     for(int i=0;i<m*n;i++){
-        if((parent[i]==i) && rank[i]>1){
-            ans+=rank[i];
+        if((parent[i]==i) && rank[i]>2){
+            ans+=rank[i]-1;
         }
     }
     return ans;
