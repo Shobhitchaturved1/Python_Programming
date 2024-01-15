@@ -1,24 +1,20 @@
-
 class Solution:
     def closeStrings(self, word1: str, word2: str) -> bool:
-        freq1 = [0] * 26
-        freq2 = [0] * 26
-
-        for ch in word1:
-            freq1[ord(ch) - ord('a')] += 1
-
-        for ch in word2:
-            freq2[ord(ch) - ord('a')] += 1
-
-        for i in range(26):
-            if (freq1[i] == 0 and freq2[i] != 0) or (freq1[i] != 0 and freq2[i] == 0):
-                return False
-
-        freq1.sort()
-        freq2.sort()
-
-        for i in range(26):
-            if freq1[i] != freq2[i]:
-                return False
-
-        return True
+        #case1
+        map1=defaultdict(int)
+        map2=defaultdict(int)
+        if len(word1)!=len(word2):
+            return False
+        for i in range(len(word1)):
+            map1[word1[i]]+=1
+            map2[word2[i]]+=1
+        if map1==map2:
+            return True
+        #case2
+        count=0
+        for i in word1:
+            if map2[i]==0:
+                count+=1
+            if count==2:
+                return False    
+        return sorted(map1.values())==sorted(map2.values())        
