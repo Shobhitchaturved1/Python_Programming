@@ -4,8 +4,8 @@ class Solution:
         buckets=defaultdict(list)
         for char,cnt in count.items():
             buckets[cnt]+=char
-        res=""    
+        res=[]   
         for i in range(len(s),0,-1):
             for c in buckets[i]:    
-                res+=c*i
-        return res        
+                res.append(c*i)
+        return "".join(res)        
