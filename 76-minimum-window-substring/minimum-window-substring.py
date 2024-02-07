@@ -1,40 +1,26 @@
 class Solution:
     def minWindow(self, s: str, t: str) -> str:
-        if not s or not t:
+        if t=="":
             return ""
-
-        dictT = defaultdict(int)
+        count_T,window={},{}
         for c in t:
-            dictT[c] += 1
+            count_T[c]=1+count_T.get(c,0)
+        have,need=0,len(count_T)
+        res,reslen=[0,0],float("infinity")
+        l=0
+        for r in range(len(s)):
+            c=s[r]
+            window[c]=1+window.get(c,0)
+            if c in count_T and count_T[c]==window[c]:
+                have+=1
 
-        required = len(dictT)
-        l, r = 0, 0
-        formed = 0
-
-        windowCounts = defaultdict(int)
-        ans = [-1, 0, 0]
-
-        while r < len(s):
-            c = s[r]
-            windowCounts[c] += 1
-
-            if c in dictT and windowCounts[c] == dictT[c]:
-                formed += 1
-
-            while l <= r and formed == required:
-                c = s[l]
-
-                if ans[0] == -1 or r - l + 1 < ans[0]:
-                    ans[0] = r - l + 1
-                    ans[1] = l
-                    ans[2] = r
-
-                windowCounts[c] -= 1
-                if c in dictT and windowCounts[c] < dictT[c]:
-                    formed -= 1
-
-                l += 1
-
-            r += 1
-
-        return "" if ans[0] == -1 else s[ans[1]:ans[2] + 1]
+            while have==need:
+                if(r-l+1)<reslen:
+                    res=[l,r]
+                    reslen=r-l+1
+                window[s[l]]-=1
+                if s[l] in count_T and window[s[l]]<count_T[s[l]]:
+                    have-=1
+                l+=1
+        l,r=res 
+        return s[l:r+1] if reslen!=float("infinity") else ""
