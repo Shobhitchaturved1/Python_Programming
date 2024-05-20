@@ -18,8 +18,7 @@ class Solution:
         cur=head
         while cur:
             copy=oldtocopy[cur]
-            copy.next=oldtocopy[cur.next]
+            copy.next=oldtocopy[cur.next] 
             copy.random=oldtocopy[cur.random]
             cur=cur.next
-        return oldtocopy[head]        
-        
+        return oldtocopy[head]       
