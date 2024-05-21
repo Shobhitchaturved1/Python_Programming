@@ -12,4 +12,4 @@ class Solution:
             if not left or not right:
                 return False
             return left.val==right.val and dfs(left.right,right.left) and dfs(left.left,right.right)
-        return dfs(root.left,root.right)            
+        return dfs(root.left,root.right)                
