@@ -5,23 +5,22 @@
 #         self.left = left
 #         self.right = right
 class BSTIterator:
-    def inorder(self,root,arr):
-        if root:
-            self.inorder(root.left,arr)
-            arr.append(root.val)
-            self.inorder(root.right,arr)
-        return arr    
+
     def __init__(self, root: Optional[TreeNode]):
-        self.arr=self.inorder(root,arr=[])
-        self.i=0
+        self.stack=[]
+        while root:
+            self.stack.append(root)
+            root=root.left           
+
     def next(self) -> int:
-        a=self.arr[self.i]
-        self.i+=1
-        return a
-
-
+        res=self.stack.pop()
+        cur=res.right
+        while cur:
+            self.stack.append(cur)
+            cur=cur.left
+        return res.val
     def hasNext(self) -> bool:
-        return  self.i<len(self.arr)
+        return self.stack !=[]
 
 
 # Your BSTIterator object will be instantiated and called as such:
