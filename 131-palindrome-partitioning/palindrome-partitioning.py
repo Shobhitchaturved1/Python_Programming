@@ -1,14 +1,14 @@
 class Solution:
     def partition(self, s: str) -> List[List[str]]:
-        def ispalindrom(sub):
+        def palindrom(sub):
             return sub==sub[::-1]
-        def backtrack(start,path):
+        res=[]    
+        def backtrack(start,comb):
             if start==len(s):
-                result.append(path[:])
+                res.append(comb[:])
                 return
-            for end in range(start+1,len(s)+1):
-                if ispalindrom(s[start:end]):
-                    backtrack(end,path + [s[start:end]])
-        result=[]
+            for j in range(start+1,len(s)+1):
+                if palindrom(s[start:j]):
+                    backtrack(j,comb+[s[start:j]])
         backtrack(0,[])
-        return result                
+        return res            
