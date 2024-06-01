@@ -5,11 +5,14 @@ class Solution:
         length=0
         i=0
         while i<len(words):
+            #length + 1 space in between words + new word length
             if length + len(s) + len(words[i]) >maxWidth:
                 #need to add extra space in between
                 extra_space=maxWidth-length
+                #because of divide by zero error
                 spaces=extra_space//max(1,len(s)-1)
                 remainder=extra_space%max(1,len(s)-1)
+                #if only 1 word in line
                 for j in range(max(1,len(s)-1)):
                     s[j]=s[j]+ " "*spaces
                     if remainder:
