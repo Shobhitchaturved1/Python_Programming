@@ -5,7 +5,7 @@ class Solution:
         """
         f=0
         l=len(nums)
-        while(f!=l):
+        while (f!=l):
             if nums[f]==0:
                 nums.pop(f)
                 nums.insert(0,0)
@@ -15,4 +15,4 @@ class Solution:
                 nums.append(2)
                 l-=1
             else:
-                f+=1
+                f+=1        
