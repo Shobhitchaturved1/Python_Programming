@@ -13,4 +13,4 @@ class Solution:
             if nums[mid]>nums[0]:
                 l=mid+1
             else:
-                r=mid-1                        
+                r=mid-1                
