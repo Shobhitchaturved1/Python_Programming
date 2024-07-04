@@ -5,14 +5,15 @@
 #         self.next = next
 class Solution:
     def mergeNodes(self, head: Optional[ListNode]) -> Optional[ListNode]:
-        head=head.next
-        if not head:
-            return head
-        tmp=head
-        sum=0
-        while tmp.val!=0:    
-            sum+=tmp.val
+        res=ListNode(0)
+        ans=res
+        tmp=head.next
+        s=0
+        while tmp:
+            s+=tmp.val
+            if tmp.val==0:
+                ans.next=ListNode(s)
+                ans=ans.next
+                s=0
             tmp=tmp.next
-        head.val=sum
-        head.next=self.mergeNodes(tmp)
-        return head    
+        return res.next 
