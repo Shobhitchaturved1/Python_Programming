@@ -3,16 +3,17 @@ class Solution:
         hashmap=defaultdict(int)
         for i in nums:
             hashmap[i]+=1
-        res=[i for i in sorted(set(nums))]
-        dp=[0]*len(res)
-        dp[-1]=res[-1]*hashmap[res[-1]]
-        for i in range(len(res)-2,-1,-1):
-            if res[i+1]-1==res[i]:
-                if i+2<len(res):
-                    dp[i]=max(dp[i+1],res[i]*hashmap[res[i]]+dp[i+2])
-                else:    
-                    dp[i]=max(dp[i+1],res[i]*hashmap[res[i]])
+        nums=[i for i in sorted(set(nums))]
+        ear1,earn2=0,0
+        for i in range(len(nums)):
+            curEarn=hashmap[nums[i]]*nums[i]
+            if i>0 and nums[i]==nums[i-1]+1:
+                tmp=earn2
+                earn2=max(earn2,earn1+curEarn)
+                earn1=tmp
             else:
-                dp[i]=res[i]*hashmap[res[i]]+dp[i+1]     
-        #print(dp)           
-        return dp[0]        
+                tmp=earn2
+                earn2+=curEarn
+                earn1=tmp
+        return earn2            
+
