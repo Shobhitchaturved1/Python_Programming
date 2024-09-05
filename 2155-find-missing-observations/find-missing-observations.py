@@ -5,8 +5,8 @@ class Solution:
         n_sum=mean*(len(rolls)+n)-m_sum
         if n_sum>n*6 or n_sum<n:
             return []
-        ans=[(n_sum//n)-1]*n
-        n_sum-=n*((n_sum//n)-1)
+        ans=[(n_sum//n)]*n
+        n_sum-=n*((n_sum//n))
         while n_sum:
             for i in range(len(ans)):
                 ans[i]+=1
