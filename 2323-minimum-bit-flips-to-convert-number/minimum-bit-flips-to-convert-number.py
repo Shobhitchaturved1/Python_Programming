@@ -1,3 +1,8 @@
 class Solution:
     def minBitFlips(self, start: int, goal: int) -> int:
-        return (start^goal).bit_count()
+        xor_res=start^goal
+        count=0
+        while xor_res:
+            count+=xor_res&1
+            xor_res>>=1
+        return count    
