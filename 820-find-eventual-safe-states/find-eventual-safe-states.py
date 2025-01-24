@@ -1,23 +1,28 @@
 class Solution:
     def eventualSafeNodes(self, graph: List[List[int]]) -> List[int]:
-        preMap=defaultdict(list)
-        ans=[]
+        adj=defaultdict(list)
         visit=set()
         for i in range(len(graph)):
+            if len(graph[i])==0:
+                visit.add(i)
+                continue
             for j in graph[i]:
-                preMap[i].append(j)
-        #print(preMap)        
-        def dfs(i):
-            if i in visit:
-                return False
-            if preMap[i]==[]:
+                adj[i].append(j)
+        ans=[]  
+        path=set()      
+        def check(node):
+            if node in visit:
                 return True
-            visit.add(i)    
-            for pre in preMap[i]:
-                if not dfs(pre):return False
-            visit.remove(i)    
-            preMap[i]=[]    
-            return True                    
+            if node in path:
+                return False    
+            path.add(node)
+            for nei in adj[node]:
+                if not check(nei):
+                    return False
+            path.remove(node)
+            visit.add(node)
+            return True        
         for i in range(len(graph)):
-            if dfs(i):ans.append(i)
-        return ans            
+            if check(i):
+                ans.append(i)
+        return ans        
