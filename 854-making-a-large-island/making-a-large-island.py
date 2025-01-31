@@ -1,43 +1,36 @@
 class Solution:
     def largestIsland(self, grid: List[List[int]]) -> int:
-        ROW,COL=len(grid),len(grid[0])
-        numdict=defaultdict(int)
+        N=len(grid)
         directions=[[1,0],[-1,0],[0,1],[0,-1]]
-        def dfs(r,c,num):
-            nonlocal a
-            grid[r][c]=num
-            for dr,dc in directions:
-                row,col=r+dr,c+dc
-                if(0<=row<ROW and 0<=col<COL 
-                   and grid[row][col]==1):
-                   a+=1
-                   dfs(row,col,num)
-            return a       
-        num=-1          
-        for r in range(ROW):
-            for c in range(COL):
+        def out_of_bound(r,c):
+            return (min(r,c)<0 or r==N or c==N)
+        size=defaultdict(int)
+        def dfs(r,c,label):
+            if(out_of_bound(r,c) or grid[r][c]!=1):
+                return 0
+            size=1
+            grid[r][c]=label
+            for nr,nc in directions:
+                size+=dfs(nr+r,nc+c,label)
+            return size
+        label=2    
+        for r in range(N):
+            for c in range(N):
                 if grid[r][c]==1:
-                    a=1
-                    a=dfs(r,c,num)
-                    numdict[num]=a
-                    num-=1
-        #print(grid)             
-        finalans=0  
-        #print(numdict)          
-        for r in range(ROW):
-            for c in range(COL):
+                    size[label]=dfs(r,c,label)
+                    label+=1
+
+        def connect(r,c):
+            visit=set()
+            res=1
+            for nr,nc in directions:
+                if not out_of_bound(nr+r,nc+c) and grid[nr+r][nc+c] not in visit:
+                    visit.add(grid[nr+r][nc+c]) 
+                    res+=size[grid[nr+r][nc+c]]
+            return res                  
+        res=0 if not size else max(size.values())
+        for r in range(N):
+            for c in range(N):
                 if grid[r][c]==0:
-                    res=[]
-                    for dr,dc in directions:
-                        row,col=r+dr,c+dc
-                        if(0<=row<ROW and 0<=col<COL):
-                            res.append(grid[row][col])
-                    #print(res)   
-                    ans=0     
-                    for x in set(res):
-                        ans+=numdict[x]
-                    finalans=max(ans+1,finalans)
-        ans=finalans                                       
-        if ans==0:
-            return ROW*COL  
-        return ans              
+                    res=max(res,connect(r,c))
+        return res            
