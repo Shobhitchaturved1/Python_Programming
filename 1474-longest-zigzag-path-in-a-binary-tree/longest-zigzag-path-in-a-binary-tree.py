@@ -7,17 +7,12 @@
 class Solution:
     def longestZigZag(self, root: Optional[TreeNode]) -> int:
         res=0
-        def solve(root,steps,goleft):
+        def dfs(root,l,r):
             nonlocal res
             if not root:
                 return
-            res=max(res,steps)    
-            if goleft==True:    
-                solve(root.left,steps+1,False)
-                solve(root.right,1,True)
-            else:
-                solve(root.right,steps+1,True)
-                solve(root.left,1,False)
-        solve(root,0,False)
-        solve(root,0,True)            
+            res=max(res,l,r)    
+            dfs(root.left,r+1,0)
+            dfs(root.right,0,l+1)    
+        dfs(root,0,0)
         return res    
