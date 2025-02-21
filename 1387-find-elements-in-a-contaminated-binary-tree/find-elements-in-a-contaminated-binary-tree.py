@@ -7,7 +7,8 @@
 class FindElements:
 
     def __init__(self, root: Optional[TreeNode]):
-        self.ans=[0]
+        self.ans=set([0])
+        
         if root:
             root.val=0
         def dfs(root):
@@ -15,11 +16,11 @@ class FindElements:
                 return
             if root.left:
                 root.left.val=root.val*2+1
-                self.ans.append(root.left.val)
+                self.ans.add(root.left.val)
                 dfs(root.left)
             if root.right:
                 root.right.val=root.val*2+2  
-                self.ans.append(root.right.val)
+                self.ans.add(root.right.val)
                 dfs(root.right)       
         dfs(root)           
 
