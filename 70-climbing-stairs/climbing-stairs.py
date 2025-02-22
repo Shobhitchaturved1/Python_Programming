@@ -1,13 +1,8 @@
 class Solution:
     def climbStairs(self, n: int) -> int:
-        n1=1
-        n2=2
-        if n<=2:
-            return n
-        ans=0    
-        while n>2:
-            ans=n1+n2
-            n1=n2
-            n2=ans
-            n-=1
-        return ans    
+        one,two=1,0
+        for i in range(n,-1,-1):
+            tmp=one
+            one=one+two
+            two=tmp
+        return two    
