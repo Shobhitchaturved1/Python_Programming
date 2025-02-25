@@ -1,13 +1,9 @@
 class Solution:
     def change(self, amount: int, coins: List[int]) -> int:
-        row = [0] * (amount + 1)
-        row[0]=1
-        for i in reversed(coins):
-            newrow=row
-            for j in range(1,len(row)):
-                if j-i>=0:
-                    newrow[j]+=newrow[j-i]
-            row=newrow
-            
-            #print(row)
-        return row[-1]            
+        dp=[0]*(amount+1)
+        dp[0]=1
+        for i in range(len(coins)-1,-1,-1):
+            for j in range(amount+1):
+                if j-coins[i]>=0:
+                    dp[j]+=dp[j-coins[i]]
+        return dp[amount]            
