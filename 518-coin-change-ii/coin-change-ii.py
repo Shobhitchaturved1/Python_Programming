@@ -1,9 +1,15 @@
 class Solution:
     def change(self, amount: int, coins: List[int]) -> int:
-        dp=[0]*(amount+1)
-        dp[0]=1
-        for i in range(len(coins)-1,-1,-1):
-            for j in range(amount+1):
-                if j-coins[i]>=0:
-                    dp[j]+=dp[j-coins[i]]
-        return dp[amount]            
+        cache={}
+        def dfs(idx,a):
+            if (idx,a) in cache:
+                return cache[(idx,a)]
+            if a==amount:
+                return 1
+            if a>amount:
+                return 0
+            if idx==len(coins):
+                return 0
+            cache[(idx,a)]=dfs(idx,a+coins[idx])+dfs(idx+1,a)            
+            return cache[(idx,a)]
+        return dfs(0,0)    
