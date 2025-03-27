@@ -1,33 +1,25 @@
 class Solution:
     def minimumIndex(self, nums: List[int]) -> int:
-        
-        pre=[[False,-1]]*len(nums)
-        suf=[[False,-1]]*len(nums)
-        map1=defaultdict(int)
-        map2=defaultdict(int)
-        maxi=float("-inf")
-        maxi2=float("-inf")
-        val,val2=-1,-1
-        for i in range(len(nums)):
-            map1[nums[i]]+=1
-            if map1[nums[i]]>maxi:
-                maxi=map1[nums[i]]
-                val=nums[i]
-            pre[i]=[True,val] if maxi*2>i+1 else [False,-1]
-            idx=len(nums)-i-1   
-            #print(idx) 
-            map2[nums[idx]]+=1
-            if map2[nums[idx]]>maxi2:
-                maxi2=map2[nums[idx]]
-                val2=nums[idx]
-            suf[idx]=[True,val2] if maxi2*2>len(nums)-idx else [False,-1]    
-        ans=-1
-        
-        #print(pre)
-        #print(suf)
+        first_map = defaultdict(int)
+        second_map = defaultdict(int)
+        n = len(nums)
 
-        for i in range(len(pre)-1):
-            if pre[i]==suf[i+1] and pre[i][0]:
-                ans=i
-                break
-        return ans                
+        # Add all elements of nums to second_map
+        for num in nums:
+            second_map[num] += 1
+
+        for index in range(n):
+            # Create split at current index
+            num = nums[index]
+            second_map[num] -= 1
+            first_map[num] += 1
+
+            # Check if valid split
+            if (
+                first_map[num] * 2 > index + 1
+                and second_map[num] * 2 > n - index - 1
+            ):
+                return index
+
+        # No valid split exists
+        return -1
