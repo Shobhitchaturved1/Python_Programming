@@ -22,4 +22,3 @@ class Solution:
                 max_size -= 1
 
         return result
-
